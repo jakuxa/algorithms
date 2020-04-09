@@ -11,7 +11,6 @@
     <groupId>cn.jakuxa</groupId>
     <artifactId>Algorithms</artifactId>
     <version>1.0.0</version>
-    <name>demo</name>
     <description>算法练习</description>
 
     <properties>
@@ -24,6 +23,10 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
