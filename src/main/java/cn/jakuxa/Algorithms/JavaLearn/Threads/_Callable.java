@@ -11,7 +11,7 @@ public class _Callable implements Callable<String> {
     //学习通过实现callable接口的方法开启线程
 
     private static String url = "https://img.moegirl.org/common/a/a8/Gfspas12_1.png";
-    private String path = "/Users/jakuxa/Downloads/";
+    private String path = "/Users/jakuxa/Downloads/spas/";
     
     public static int total = 10;
 
