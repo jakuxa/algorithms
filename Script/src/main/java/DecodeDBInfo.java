@@ -17,7 +17,7 @@ public class DecodeDBInfo {
     private static final String TARGET_FILE = "out.txt";
 
     public static void main(String[] args) {
-        System.out.println("kettle数据库连接密码解密小公具\r\n请选择源文件,支持txt格式\r\n输入\"h\"，查看数据源格式\r\n输入\"q\"，退出");
+        System.out.println("kettle数据库连接密码解密小工具\r\n请选择源文件,支持txt格式\r\n输入\"h\"，查看数据源格式\r\n输入\"q\"，退出");
         Scanner sc = new Scanner(System.in);
         while (true){
             System.out.print("文件路径: ");
@@ -35,7 +35,8 @@ public class DecodeDBInfo {
                 }
                 WORK_DIR = source.getParent();
                 readTxt(source, WORK_DIR + File.separator + TARGET_FILE);
-                break;
+                System.out.println("\r\n完成，如要退出请输入q");
+                continue;
             }
         }
         sc.close();
