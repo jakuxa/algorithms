@@ -7,25 +7,54 @@ import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DecodeDBInfo {
-    private static final String WORK_DIR = "F:\\Work\\dbdecode\\";
+    private static String WORK_DIR;
     //输入文件
-    private static final String SOURCE_FILE = "source.txt";
+    private static String SOURCE_FILE;
     //输出文件
     private static final String TARGET_FILE = "out.txt";
 
     public static void main(String[] args) {
-        readTxt(WORK_DIR + SOURCE_FILE, WORK_DIR + TARGET_FILE);
+        System.out.println("kettle数据库连接密码解密小公具\r\n请选择源文件,支持txt格式\r\n输入\"h\"，查看数据源格式\r\n输入\"q\"，退出");
+        Scanner sc = new Scanner(System.in);
+        while (true){
+            System.out.print("文件路径: ");
+            SOURCE_FILE = sc.next();
+            if("h".equals(SOURCE_FILE)) {
+                help();
+                continue;
+            }if("q".equals(SOURCE_FILE)){
+                break;
+            }else{
+                File source = new File(SOURCE_FILE);
+                if(!source.exists()){
+                    System.out.println("文件不存在!");
+                    continue;
+                }
+                WORK_DIR = source.getParent();
+                readTxt(source, WORK_DIR + File.separator + TARGET_FILE);
+                break;
+            }
+        }
+        sc.close();
     }
 
-    static void readTxt(String source, String target) {
+    static void help(){
+        System.out.println("\r\nsource.txt内容格式：");
+        System.out.println("连接名称\thost主机\t端口\tSID\t用户名\t密码密文\r\n如：");
+        System.out.println("DC-人行\t192.168.70.24\t1521\tora10g\tfcrm2\tEncrypted 2be98afc8\n" +
+                "5.0\t192.168.1.1\t1521\tiii\t12\tEncrypted 2be98afc86\n" +
+                "估值3.0\t10.20.29.60\t1521\torcl\tFD20190222J_TEST\tEncrypted 2be98af\r\n");
+    }
+
+    static void readTxt(File source, String target) {
         //开始读取
-        File file = new File(source);
         BufferedReader reader = null;
         try {
             System.out.println("以行为单位读取文件内容，一次读一整行：");
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(source), "UTF-8"));
             String tempString = null;
             List<DbInfo> dbInfoList = new ArrayList<>();
             // 一次读入一行，直到读入null为文件结束
@@ -34,9 +63,9 @@ public class DecodeDBInfo {
                 DbInfo dbInfo = readTxt(tempString);
                 dbInfoList.add(dbInfo);
             }
-            writeTxt(dbInfoList, WORK_DIR + TARGET_FILE);
-            reader.close();
+            writeTxt(dbInfoList, target);
         } catch (IOException e) {
+            System.out.println("请输入有效的文件路径");
             e.printStackTrace();
         } finally {
             if (reader != null) {
